@@ -1,0 +1,15 @@
+/* Your app custom styles here */
+
+
+.pad{
+	padding-top: 35%;
+}
+
+
+.pad2{
+	padding-top: 10%;
+}
+
+.login-screen .page, .login-screen-content, .login-screen-page {
+    /*background: var(--f7-login-screen-content-bg-color);*/
+}
