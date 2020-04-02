@@ -74,7 +74,46 @@ $$(document).on('page:init', '.page[data-name="registrate3"]', function (e) {
 //LIMITAR LOS CHECKBOX
 
 
+    //$$(".tocaBoton").on("click", limite1);
+
+
+
+
+    //function limite1(){
+
+
+      //var numberNotChecked = $$('.tocaBoton:not(":checked")').length;
+      //console.log(numberNotChecked);
+
+      /*var totalChecked = $$('.tocaBoton:checked').length;
+      console.log(totalChecked);
+
+      if(totalChecked > 3){
+        //$$('.neg').prop('disabled', true);
+        $$('.tocaBoton:checked').addClass('disabled');
+      }*/
+
   
+   // }
+
+
+   $$('.tocaBoton').on('change', function() {
+
+    var limit = 4;
+
+    if($$('.tocaBoton:checked').length >= limit) {
+
+        this.checked = false;
+    }
+});
+
+
+
+
+
+
+
+
 
 
 
