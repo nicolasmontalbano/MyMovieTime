@@ -22,6 +22,8 @@ var app = new Framework7({
       { path: '/index/', url: 'index.html', },
       { path: '/registrate2/', url: 'registrate2.html', },
       { path: '/registrate3/', url: 'registrate3.html', },
+      { path: '/peliculas/', url: 'peliculas.html', },
+      { path: '/series/', url: 'series.html', },
 
     ]
     // ... other parameters
@@ -74,30 +76,8 @@ $$(document).on('page:init', '.page[data-name="registrate3"]', function (e) {
 //LIMITAR LOS CHECKBOX
 
 
-    //$$(".tocaBoton").on("click", limite1);
 
-
-
-
-    //function limite1(){
-
-
-      //var numberNotChecked = $$('.tocaBoton:not(":checked")').length;
-      //console.log(numberNotChecked);
-
-      /*var totalChecked = $$('.tocaBoton:checked').length;
-      console.log(totalChecked);
-
-      if(totalChecked > 3){
-        //$$('.neg').prop('disabled', true);
-        $$('.tocaBoton:checked').addClass('disabled');
-      }*/
-
-  
-   // }
-
-
-   $$('.tocaBoton').on('change', function() {
+  $$('.tocaBoton').on('change', function() {
 
     var limit = 4;
 
@@ -105,11 +85,18 @@ $$(document).on('page:init', '.page[data-name="registrate3"]', function (e) {
 
         this.checked = false;
     }
-});
+  });
 
 
+  $$('.tocaBoton1').on('change', function() {
 
+    var limit = 3;
 
+    if($$('.tocaBoton1:checked').length >= limit) {
+
+        this.checked = false;
+    }
+  });
 
 
 
@@ -118,6 +105,9 @@ $$(document).on('page:init', '.page[data-name="registrate3"]', function (e) {
 
 
 })
+
+
+
 
 
 
