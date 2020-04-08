@@ -2,6 +2,9 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
+var email = "", password = "";
+
+
 var app = new Framework7({
     // App root element
     root: '#app',
@@ -61,12 +64,37 @@ $$(document).on('page:init', '.page[data-name="registrate"]', function (e) {
           inputEl: '#demo-calendar-default',
         });
 
+})
+
+// Option 4. Using live 'page:init' event handlers for each page
+$$(document).on('page:init', '.page[data-name="registrate2"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    console.log(e);
+
+
+    $$("#continuar2").on("click", function(){
+
+  email = $$("#email").val();
+  password = $$("#contraseña").val();
+  console.log(email);
+  console.log(contraseña);
+
+});
+
 
 
 })
 
 
-// Option 4. Using live 'page:init' event handlers for each page
+
+
+
+
+
+
+
+
+// Option 5. Using live 'page:init' event handlers for each page
 $$(document).on('page:init', '.page[data-name="registrate3"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
@@ -101,6 +129,24 @@ $$(document).on('page:init', '.page[data-name="registrate3"]', function (e) {
 
 
 
+
+
+
+
+$$("#continuar3").on("click", function(){
+
+
+
+  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});email-password.html
+
+
+
+});
 
 
 
