@@ -73,9 +73,9 @@
                                 <ul>
                                   <li class="item-content item-input">
                                     <div class="item-inner">
-                                      <div class="item-title item-label">Usuario</div>
+                                      <div class="item-title item-label">E-mail</div>
                                       <div class="item-input">
-                                        <input type="text" name="username" placeholder="Tu usuario">
+                                        <input type="text" name="username" id="emailLogin" placeholder="Tu e-mail">
                                       </div>
                                     </div>
                                   </li>
@@ -83,7 +83,7 @@
                                     <div class="item-inner">
                                       <div class="item-title item-label">Contraseña</div>
                                       <div class="item-input">
-                                        <input type="password" name="password" placeholder="Tu contraseña">
+                                        <input type="password" name="password" id="contraseñaLogin" placeholder="Tu contraseña">
                                       </div>
                                     </div>
                                   </li>
@@ -91,7 +91,7 @@
                               </div>
                               <div class="list">
                                 <ul>
-                                  <li><a href="/peliculas/" class="button button-fill">Iniciar</a></li>
+                                  <li><a href="/peliculas/" id="iniciar" class="button button-fill">Iniciar</a></li>
                                 </ul>
                                 <div class="block-footer">
                                   <p><a href="/registrate/" class="close-login-screen">Regístrate</a></p>
@@ -134,7 +134,7 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-     
+
 <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
 
 <script>

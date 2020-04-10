@@ -54,7 +54,62 @@ $$(document).on('page:init', '.page[data-name="about"]', function (e) {
 })
 
 
+
 // Option 3. Using live 'page:init' event handlers for each page
+$$(document).on('page:init', '.page[data-name="index"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    
+
+
+/*
+
+$$("#iniciar").on("click", function(){
+
+
+  var email = $$("#emailLogin").val();
+  var password = $$("#contraseñaLogin").val();
+  var huboError = 0;
+
+  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error){
+
+    huboError = 1;
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    console.error(errorMessage);
+    console.log(errorCode);
+  })
+
+  .then(function(){
+
+    if(huboError == 0){
+      mainView.router.navigate(/peliculas/);
+    }
+
+  });
+
+
+
+
+
+});
+
+*/
+
+
+
+
+    
+
+
+
+
+
+
+
+})
+
+
+// Option 4. Using live 'page:init' event handlers for each page
 $$(document).on('page:init', '.page[data-name="registrate"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
@@ -66,7 +121,7 @@ $$(document).on('page:init', '.page[data-name="registrate"]', function (e) {
 
 })
 
-// Option 4. Using live 'page:init' event handlers for each page
+// Option 5. Using live 'page:init' event handlers for each page
 $$(document).on('page:init', '.page[data-name="registrate2"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
@@ -94,7 +149,7 @@ $$(document).on('page:init', '.page[data-name="registrate2"]', function (e) {
 
 
 
-// Option 5. Using live 'page:init' event handlers for each page
+// Option 6. Using live 'page:init' event handlers for each page
 $$(document).on('page:init', '.page[data-name="registrate3"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     console.log(e);
