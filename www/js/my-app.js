@@ -70,7 +70,7 @@ $$("#iniciar").on("click", function(){
   console.log(emailLogin);
   console.log(claveLogin);
 
-  firebase.auth().signInWithEmailAndPassword(email, clave)
+  firebase.auth().signInWithEmailAndPassword(emailLogin, claveLogin)
 
     .catch(function(error){
       huboError = 1;
