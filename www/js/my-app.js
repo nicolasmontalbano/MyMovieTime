@@ -39,6 +39,7 @@ $$(document).on('deviceready', function() {
     console.log("Device is ready!");
 
 
+
 });
 
 // Option 1. Using one 'page:init' handler for all pages
@@ -61,44 +62,36 @@ $$(document).on('page:init', '.page[data-name="index"]', function (e) {
     
 
 
-/*
-
 $$("#iniciar").on("click", function(){
 
-
-  var email = $$("#emailLogin").val();
-  var password = $$("#contraseñaLogin").val();
+  var emailLogin = $$("#emailL").val();
+  var claveLogin = $$("#passwordL").val();
   var huboError = 0;
+  console.log(emailLogin);
+  console.log(claveLogin);
 
-  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error){
+  firebase.auth().signInWithEmailAndPassword(email, clave)
 
-    huboError = 1;
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    console.error(errorMessage);
-    console.log(errorCode);
-  })
+    .catch(function(error){
+      huboError = 1;
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.error(errorMessage);
+      console.log(errorCode);
+      alert("No se pudo entrar");
+    })
 
-  .then(function(){
+    .then(function(){
+        if(huboError == 0){
+          mainView.router.navigate('/peliculas/');
+          alert("Logeo correcto");
+          console.log("Logeo correcto");
+        }
 
-    if(huboError == 0){
-      mainView.router.navigate(/peliculas/);
-    }
-
-  });
-
-
-
+    });
 
 
 });
-
-*/
-
-
-
-
-    
 
 
 
