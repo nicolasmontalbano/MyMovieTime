@@ -74,7 +74,7 @@
                                   <li class="item-content item-input">
                                     <div class="item-inner">
                                       <div class="item-title item-label">E-mail</div>
-                                      <div class="item-input">
+                                      <div class="item-input-wrap">
                                         <input type="text" name="username" id="emailL" placeholder="Tu e-mail">
                                       </div>
                                     </div>
@@ -82,7 +82,7 @@
                                   <li class="item-content item-input">
                                     <div class="item-inner">
                                       <div class="item-title item-label">Contraseña</div>
-                                      <div class="item-input">
+                                      <div class="item-input-wrap">
                                         <input type="password" name="password" id="passwordL" placeholder="Tu contraseña">
                                       </div>
                                     </div>
@@ -91,7 +91,7 @@
                               </div>
                               <div class="list">
                                 <ul>
-                                  <li><button id="iniciar" class="button button-fill">Iniciar</button></li>
+                                  <li><a href="#" id="iniciar" class="button button-fill">Iniciar</a></li>
                                 </ul>
                                 <div class="block-footer">
                                   <p><a href="/registrate/" class="close-login-screen">Regístrate</a></p>
@@ -134,7 +134,7 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
 
 <script>
