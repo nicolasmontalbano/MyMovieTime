@@ -27,6 +27,9 @@ var app = new Framework7({
       { path: '/registrate3/', url: 'registrate3.html', },
       { path: '/peliculas/', url: 'peliculas.html', },
       { path: '/series/', url: 'series.html', },
+      { path: '/anime/', url: 'anime.html', },
+      { path: '/aportes/', url: 'aportes.html', },
+      { path: '/perfil/', url: 'perfil.html', },
 
     ]
     // ... other parameters
@@ -125,6 +128,11 @@ $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
 });
 
 */
+
+var swipeToClosePopup = app.popup.create({
+  el: '.popup-swipe-to-close',
+  swipeToClose: true,
+});
 
 
 
