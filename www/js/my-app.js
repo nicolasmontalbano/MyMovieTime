@@ -129,10 +129,7 @@ $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
 
 */
 
-var swipeToClosePopup = app.popup.create({
-  el: '.popup-swipe-to-close',
-  swipeToClose: true,
-});
+
 
 
 

@@ -15,6 +15,15 @@
 }
 
 
-.demo-card-header-pic .card-header {
-  
+.infoizq{
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.popup{
+	background-color: #141414;
+}
+
+.letrablanca{
+	color: white;
 }
