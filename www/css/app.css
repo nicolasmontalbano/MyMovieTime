@@ -20,10 +20,102 @@
 	font-weight: bold;
 }
 
-.popup{
+.popup, .page, ul, .block, .row, .col{
 	background-color: #141414;
 }
 
 .letrablanca{
 	color: white;
+}
+
+
+.tabbar .tab-link-active, .tabbar-labels .tab-link-active, .item-inner, .item-content, .item-input {
+    /*color: var(--f7-tabbar-link-active-color,var(--f7-theme-color));
+    background-color: var(--f7-tabbar-link-active-bg-color,transparent);*/
+    color: white;
+    background-color: #141414;
+}
+
+
+.tabbar .tab-link:not(.tab-link-active), .tabbar-labels .tab-link:not(.tab-link-active), .page-content, .login-screen-content {
+    /*background-color: var(--f7-tabbar-link-inactive-bg-color,transparent);*/
+    background-color: #141414;
+    color: grey;
+}
+
+.item-titel, .item-label{
+	color: white;
+}
+
+.list .item-floating-label, .list .item-label {
+    width: 100%;
+    vertical-align: top;
+    flex-shrink: 0;
+    font-size: var(--f7-label-font-size);
+    font-weight: var(--f7-label-font-weight);
+    line-height: var(--f7-label-line-height);
+    color: grey;
+    transition-duration: .2s;
+    transition-property: transform,color;
+}
+
+.list input[type=date], .list input[type=datetime-local], .list input[type=email], .list input[type=month], .list input[type=number], .list input[type=password], .list input[type=search], .list input[type=tel], .list input[type=text], .list input[type=time], .list input[type=url], .list select {
+    width: 100%;
+    height: var(--f7-input-height);
+    color: white;
+    font-size: var(--f7-input-font-size);
+    background-color: var(--f7-input-bg-color,transparent);
+    padding-left: var(--f7-input-padding-left);
+    padding-right: var(--f7-input-padding-right);
+}
+
+placeholder{
+	color: white;
+}
+
+.button{
+	color:#141414;
+	background-color: white;
+}
+
+.login-screen-titel, a, title{
+	color: white;
+}
+
+:root {
+    --f7-theme-color: white;
+    --f7-theme-color-rgb: 0,122,255;
+    --f7-theme-color-shade: #0066d6;
+    --f7-theme-color-tint: #298fff;
+    --f7-safe-area-left: 0px;
+    --f7-safe-area-right: 0px;
+    --f7-safe-area-top: 0px;
+    --f7-safe-area-bottom: 0px;
+    --f7-safe-area-outer-left: 0px;
+    --f7-safe-area-outer-right: 0px;
+    --f7-device-pixel-ratio: 1;
+}
+
+.block-strong {
+    color: white;
+    padding-top: var(--f7-block-padding-vertical);
+    padding-bottom: var(--f7-block-padding-vertical);
+    background-color: #141414;
+}
+
+.radio {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    z-index: 1;
+    --f7-touch-ripple-color: #ECEBEB;
+    opacity: 1;
+}
+
+.list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background: #141414;
 }
