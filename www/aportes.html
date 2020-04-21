@@ -10,11 +10,8 @@
         </div>
         </div>
     </div>-->
-    <div class="page-content">
 
-
-    <div class="page">
-      <!-- Additional "tabbar-labels" class -->
+    <!-- Additional "tabbar-labels" class -->
       <div class="toolbar tabbar tabbar-labels toolbar-bottom">
         <div class="toolbar-inner">
           <a href="/peliculas/" class="tab-link">
@@ -46,6 +43,13 @@
 
         </div>
       </div>
+
+
+    <div class="page-content">
+
+
+    <div class="page">
+      
       
 
 
@@ -62,7 +66,7 @@
           Tipo de contenido 
         </div>
         <div class="col">
-          Serie <label class="radio"><input type="radio" name="serieopelicula1"><i class="icon-radio"></i></label> Película <label class="radio"><input type="radio" name="serieopelicula1"><i class="icon-radio"></i></label>
+          Serie <label class="radio"><input type="radio" class="serie" name="serieopelicula1"><i class="icon-radio"></i></label> Película <label class="radio"><input type="radio" class="pelicula" name="serieopelicula1"><i class="icon-radio"></i></label>
         </div>
       </div>
     </div>
@@ -73,7 +77,7 @@
           ¿Es animé? 
         </div>
         <div class="col">
-          Si <label class="radio"><input type="radio" name="animeono"><i class="icon-radio"></i></label> No <label class="radio"><input type="radio" name="animeono"><i class="icon-radio"></i></label>
+          Si <label class="radio"><input type="radio" class="esanime" value="esanime" name="animeono"><i class="icon-radio"></i></label> No <label class="radio"><input type="radio" class="noesanime" value="noesanime" name="animeono"><i class="icon-radio"></i></label>
         </div>
       </div>
     </div>
@@ -84,18 +88,30 @@
           ¿Está disponible en Netflix? 
         </div>
         <div class="col">
-          Si <label class="radio"><input type="radio" name="netflix"><i class="icon-radio"></i></label> No <label class="radio"><input type="radio" name="netflix"><i class="icon-radio"></i></label>
+          Si <label class="radio"><input type="radio" class="estaennetflix" name="netflix"><i class="icon-radio"></i></label> No <label class="radio"><input type="radio" class="noestaennetflix" name="netflix"><i class="icon-radio"></i></label>
         </div>
       </div>
     </div>
 
 
+
     <li>
       <div class="item-content item-input">
         <div class="item-inner">
-          <div class="item-title item-label">Título</div>
+          <div class="item-title item-label">Imagen</div>
           <div class="item-input-wrap">
             <input type="text" name="name">
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li>
+      <div class="item-content item-input">
+        <div class="item-inner">
+          <div class="item-title item-label">Nombre</div>
+          <div class="item-input-wrap">
+            <input type="text" id="nombre" name="name">
           </div>
         </div>
       </div>
@@ -106,7 +122,7 @@
         <div class="item-inner">
           <div class="item-title item-label">Año</div>
           <div class="item-input-wrap">
-            <input type="text" name="name">
+            <input type="text" id="año" name="name">
           </div>
         </div>
       </div>
@@ -117,7 +133,7 @@
         <div class="item-inner">
           <div class="item-title item-label">Duración</div>
           <div class="item-input-wrap">
-            <input type="text" name="name">
+            <input type="text" id="duracion" name="name">
           </div>
         </div>
       </div>
@@ -129,7 +145,7 @@
         <div class="item-inner">
           <div class="item-title item-label">Sinopsis</div>
           <div class="item-input-wrap">
-            <textarea ></textarea>
+            <textarea id="sinopsis"></textarea>
           </div>
         </div>
       </div>
@@ -145,11 +161,11 @@
       </div>
     </li>
 
-    <div class="list">
+    <div class="list muestronoanime">
                       <ul>
                         <li id="li1">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Acción" class="tocaBoton" />
+                            <input type="checkbox" name="checkap" value="Acción" class="tocaBotonAp1" />
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Acción</div>
@@ -158,7 +174,7 @@
                         </li>
                         <li id="li2">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="CienciaFicción" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="CienciaFicción" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Ciencia Ficción</div>
@@ -167,7 +183,7 @@
                         </li>
                         <li id="li3">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Comedia" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Comedia" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Comedia</div>
@@ -176,7 +192,7 @@
                         </li>
                         <li id="li4">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Documental" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Documental" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Documental</div>
@@ -185,7 +201,7 @@
                         </li>
                         <li id="li5">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Drama" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Drama" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Drama</div>
@@ -194,7 +210,7 @@
                         </li>
                         <li id="li6">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Fantasía" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Fantasía" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Fantasía</div>
@@ -203,7 +219,7 @@
                         </li>
                         <li id="li7">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Melodrama" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Melodrama" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Melodrama</div>
@@ -212,7 +228,7 @@
                         </li>
                         <li id="li8">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Drama" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Drama" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Musical</div>
@@ -221,7 +237,7 @@
                         </li>
                         <li id="li9">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Drama" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Drama" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Romance</div>
@@ -230,7 +246,7 @@
                         </li>
                         <li id="li10">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Drama" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Drama" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Suspenso</div>
@@ -239,7 +255,7 @@
                         </li>
                         <li id="li11">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Drama" class="tocaBoton"/>
+                            <input type="checkbox" name="checkap" value="Drama" class="tocaBotonAp1"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Terror</div>
@@ -249,12 +265,11 @@
                       </ul>
                     </div>
 
-                    <h3 class="text-align-center">Elegí hasta 2 géneros de animé favoritos</h3>
-                    <div class="list">
+                    <div class="list muestroanime">
                     <ul>
                     <li id="li1">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Acción" class="tocaBoton1" />
+                            <input type="checkbox" name="checkap" value="Acción" class="tocaBotonAp2" />
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Kodomo</div>
@@ -263,7 +278,7 @@
                         </li>
                         <li id="li2">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="CienciaFicción" class="tocaBoton1"/>
+                            <input type="checkbox" name="checkap" value="CienciaFicción" class="tocaBotonAp2"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Shōnen</div>
@@ -272,7 +287,7 @@
                         </li>
                         <li id="li3">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Comedia" class="tocaBoton1"/>
+                            <input type="checkbox" name="checkap" value="Comedia" class="tocaBotonAp2"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Shōjo</div>
@@ -281,7 +296,7 @@
                         </li>
                         <li id="li4">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Documental" class="tocaBoton1"/>
+                            <input type="checkbox" name="checkap" value="Documental" class="tocaBotonAp2"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Seinen</div>
@@ -290,7 +305,7 @@
                         </li>
                         <li id="li5">
                           <label class="item-checkbox item-content">
-                            <input type="checkbox" name="checkap" value="Drama" class="tocaBoton1"/>
+                            <input type="checkbox" name="checkap" value="Drama" class="tocaBotonAp2"/>
                             <i class="icon icon-checkbox"></i>
                             <div class="item-inner">
                               <div class="item-title">Josei</div>
@@ -298,11 +313,11 @@
                           </label>
                         </li>
                       </ul>
+                    </div>
 
-                      <div class="block row">
-                        <div class="col"><a class="button button-fill" id="enviarap" href="#">Enviar</a></div>
-                        <div class="col"></div>
-                      </div>
+                    <div class="block row">
+                      <div class="col"><a class="button button-fill marg" id="enviaraporte" href="#">Enviar</a></div>
+                      <div class="col"></div>
                     </div>
 
 

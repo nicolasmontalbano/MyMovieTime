@@ -2,7 +2,7 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac;
+var email, password, nombre, apellido, fechnac, aux, nombre, año, duracion, sinopsis, generos;
 
 
 var app = new Framework7({
@@ -38,7 +38,7 @@ var app = new Framework7({
 
 var mainView = app.views.create('.view-main');
 
-var db, refUsuarios, refTiposUsuarios;
+var db, refUsuarios, refTiposUsuarios, refSeries, refPeliculas, refSeriesAnime, refPeliculasAnime;
  
 
 // Handle Cordova Device Ready Event
@@ -50,6 +50,10 @@ $$(document).on('deviceready', function() {
   db = firebase.firestore();
   refUsuarios = db.collection("USUARIOS");
   refTiposUsuarios= db.collection("TIPOS_USUARIOS");
+  refSeries = db.collection("SERIES");
+  refPeliculas = db.collection("PELICULAS");
+  refSeriesAnime = db.collection("SERIES_ANIME");
+  refPeliculasAnime = db.collection("PELICULAS_ANIME");
 
 
 $$("#iniciar").on("click", login);
@@ -76,6 +80,35 @@ $$(document).on('page:init', '.page[data-name="about"]', function (e) {
 $$(document).on('page:init', '.page[data-name="index"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     
+
+})
+
+
+// Option . Using live 'page:init' event handlers for each page
+$$(document).on('page:init', '.page[data-name="aportes"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    
+    $$(".muestronoanime").hide();
+    $$(".muestroanime").hide();
+
+    $$(".esanime").on("click", mostrar1);
+
+    $$(".noesanime").on("click", mostrar2);
+
+    $$("#enviaraporte").on("click", guardarDatosAporte);
+
+    $$(".estaennetflix").on("click", guardarSi);
+
+    $$(".noestaennetflix").on("click", guardarNo);
+
+
+    
+
+
+
+
+
+
 
 })
 
@@ -286,3 +319,131 @@ function verif(){
       mainView.router.navigate("/registrate/");
   }
 }
+
+function mostrar1(){
+
+  console.log("Es anime");
+
+  $$(".muestronoanime").hide();
+  $$(".muestroanime").show();
+  aux = false;
+
+
+
+}
+
+
+function mostrar2(){
+
+  console.log("No es anime");
+
+  $$(".muestronoanime").show();
+  $$(".muestroanime").hide();
+
+  aux = true;
+}
+
+function guardarSi(){
+  netflix = "Si";
+}
+
+function guardarNo(){
+  netflix = "No";
+}
+
+
+
+function guardarDatosAporte(){
+
+  nombre = $$("#nombre").val();
+  año = $$("#año").val();
+  duracion = $$("#duracion").val();
+  sinopsis = $$("#sinopsis").val();
+
+  if (aux == true){
+      if($$(".tocaBotonAp1:checked")){
+        generos = generos + ", " + $$(".tocaBotonAp1").val();
+      } 
+  }
+
+  if (aux == false){
+    if($$(".tocaBotonAp2:checked")){
+      generos = generos + ", " + $$(".tocaBotonAp2").val();
+    }
+    
+  }
+
+
+
+
+  var data = {
+    nombre: nombre,
+    año: año,
+    duracion: duracion,
+    sinopsis: sinopsis,
+    generos: generos,
+    netflix: netflix
+
+  }
+
+  if($$(".esanime:checked")){
+
+    if($$(".serie:checked")){
+
+      refSeriesAnime.doc(nombre).set(data);
+
+    }
+
+  }
+
+  if($$(".esanime:checked")){
+
+    if($$(".pelicula:checked")){
+
+      refPeliculasAnime.doc(nombre).set(data);
+
+    }
+
+  }
+
+
+  if($$(".noesanime:checked")){
+
+    if($$(".serie:checked")){
+
+      refSeries.doc(nombre).set(data);
+
+    }
+
+  }
+
+
+  if($$(".noesanime:checked")){
+
+    if($$(".pelicula:checked")){
+
+      refPeliculas.doc(nombre).set(data);
+
+    }
+
+  }  
+
+
+
+
+
+
+}
+
+
+
+/*
+
+  DECLARAR GLOBAL LAS SIGUIENTES VARIABLES:
+
+  aux, nombre, año, duracion, sinopsis, generos
+
+
+
+
+*/
