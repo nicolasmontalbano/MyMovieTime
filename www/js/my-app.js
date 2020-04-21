@@ -2,7 +2,7 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, nombre, año, duracion, sinopsis, generos;
+var email, password, nombre, apellido, fechnac, aux, nombre, año, duracion, sinopsis, generos, netflix;
 
 
 var app = new Framework7({
@@ -360,7 +360,7 @@ function guardarDatosAporte(){
   duracion = $$("#duracion").val();
   sinopsis = $$("#sinopsis").val();
 
-  if (aux == true){
+  /*if (aux == true){
       if($$(".tocaBotonAp1:checked")){
         generos = generos + ", " + $$(".tocaBotonAp1").val();
       } 
@@ -371,7 +371,7 @@ function guardarDatosAporte(){
       generos = generos + ", " + $$(".tocaBotonAp2").val();
     }
     
-  }
+  }*/
 
 
 
@@ -381,69 +381,84 @@ function guardarDatosAporte(){
     año: año,
     duracion: duracion,
     sinopsis: sinopsis,
-    generos: generos,
     netflix: netflix
 
   }
 
-  if($$(".esanime:checked")){
 
-    if($$(".serie:checked")){
+    /*$("input").each(function() {
+      //Si está seleccionado muestra su value
+      if($(this).prop('checked')) {
+        alert("El input " + $(this).prop('value') + " está seleccionado");
+      }
+    });*/
+
+  
+
+
+  if( $$(".esanime").is(":checked") ) {
+
+    if( $$(".serie").is(":checked") ){
 
       refSeriesAnime.doc(nombre).set(data);
 
+      //alert("Es una serie de anime");
+      console.log("Es una serie de anime");
+
     }
 
   }
 
-  if($$(".esanime:checked")){
 
-    if($$(".pelicula:checked")){
+  if( $$(".esanime").is(":checked") ) {
+
+    if( $$(".pelicula").is(":checked") ){
 
       refPeliculasAnime.doc(nombre).set(data);
 
+      //alert("Es una pelicula de anime");
+      console.log("Es una pelicula de anime");
+
     }
 
   }
 
 
-  if($$(".noesanime:checked")){
 
-    if($$(".serie:checked")){
+  if( $$(".noesanime").is(":checked") ) {
+
+    if( $$(".serie").is(":checked") ){
 
       refSeries.doc(nombre).set(data);
 
+      //alert("Es una serie");
+      console.log("Es una serie");
+
     }
 
   }
 
 
-  if($$(".noesanime:checked")){
 
-    if($$(".pelicula:checked")){
+  if( $$(".noesanime").is(":checked") ) {
+
+    if( $$(".pelicula").is(":checked") ){
 
       refPeliculas.doc(nombre).set(data);
 
+      //alert("Es una pelicula");
+      console.log("Es una pelicula");
+
     }
 
-  }  
+  }
 
 
 
 
 
 
-}
+};
 
 
 
-/*
-
-  DECLARAR GLOBAL LAS SIGUIENTES VARIABLES:
-
-  aux, nombre, año, duracion, sinopsis, generos
-
-
-
-
-*/
