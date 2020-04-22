@@ -89,13 +89,14 @@ $$(document).on('page:init', '.page[data-name="aportes"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     
     $$(".muestronoanime").hide();
+
     $$(".muestroanime").hide();
 
     $$(".esanime").on("click", mostrar1);
 
     $$(".noesanime").on("click", mostrar2);
 
-    $$("#enviaraporte").on("click", guardarDatosAporte);
+    $$("#enviarAporte").on("click", guardarDatosAporte);
 
     $$(".estaennetflix").on("click", guardarSi);
 
@@ -103,7 +104,7 @@ $$(document).on('page:init', '.page[data-name="aportes"]', function (e) {
 
 
     
-
+    
 
 
 
@@ -386,12 +387,7 @@ function guardarDatosAporte(){
   }
 
 
-    /*$("input").each(function() {
-      //Si está seleccionado muestra su value
-      if($(this).prop('checked')) {
-        alert("El input " + $(this).prop('value') + " está seleccionado");
-      }
-    });*/
+    
 
   
 
