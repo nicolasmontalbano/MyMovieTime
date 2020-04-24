@@ -2,7 +2,7 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, nombre, año, duracion, sinopsis, netflix;
+var email, password, nombre, apellido, fechnac, aux, titulo, año, duracion, sinopsis, netflix;
 
 var generos = [];
 
@@ -108,6 +108,7 @@ $$(document).on('page:init', '.page[data-name="aportes"]', function (e) {
     $$(".noestaennetflix").on("click", guardarNo);
 
     $$("#subirImg").on("click", selImage);
+
 
    // $$("#enviarAporte").on("click", onSuccess);
     
@@ -313,6 +314,8 @@ function guardarDatos2(){
 
 
 
+
+
 function verif(){
 
 if ($$("input").is(':empty')){
@@ -374,7 +377,7 @@ function guardarDatosAporte(){
 
   var a;
 
-  nombre = $$("#nombre").val();
+  titulo = $$("#titulo").val();
   año = $$("#año").val();
   duracion = $$("#duracion").val();
   sinopsis = $$("#sinopsis").val();
@@ -391,7 +394,7 @@ for(i = 1; i <= 16; i++){
 
 
   var data = {
-    nombre: nombre,
+    titulo: titulo,
     año: año,
     duracion: duracion,
     sinopsis: sinopsis,
@@ -405,7 +408,7 @@ for(i = 1; i <= 16; i++){
 
     if( $$(".serie").is(":checked") ){
 
-      refSeriesAnime.doc(nombre).set(data);
+      refSeriesAnime.doc(titulo).set(data);
 
       //alert("Es una serie de anime");
       console.log("Es una serie de anime");
@@ -419,7 +422,7 @@ for(i = 1; i <= 16; i++){
 
     if( $$(".pelicula").is(":checked") ){
 
-      refPeliculasAnime.doc(nombre).set(data);
+      refPeliculasAnime.doc(titulo).set(data);
 
       //alert("Es una pelicula de anime");
       console.log("Es una pelicula de anime");
@@ -434,7 +437,7 @@ for(i = 1; i <= 16; i++){
 
     if( $$(".serie").is(":checked") ){
 
-      refSeries.doc(nombre).set(data);
+      refSeries.doc(titulo).set(data);
 
       //alert("Es una serie");
       console.log("Es una serie");
@@ -449,7 +452,7 @@ for(i = 1; i <= 16; i++){
 
     if( $$(".pelicula").is(":checked") ){
 
-      refPeliculas.doc(nombre).set(data);
+      refPeliculas.doc(titulo).set(data);
 
       //alert("Es una pelicula");
       console.log("Es una pelicula");
@@ -499,12 +502,12 @@ function onSuccess(imageData) {
 
     var getFileObject = function(filePathOrUrl, cb) {
         getFileBlob(filePathOrUrl, function(blob) {
-            cb(blobToFile(blob, nombre + '.jpg'));
+            cb(blobToFile(blob, titulo + '.jpg'));
         });
     };
 
     getFileObject(imageData, function(fileObject) {
-        var uploadTask = storageRef.child('images/' + nombre + '.jpg').put(fileObject);
+        var uploadTask = storageRef.child('images/' + titulo + '.jpg').put(fileObject);
 
         uploadTask.on('state_changed', function(snapshot) {
             console.log(snapshot);
