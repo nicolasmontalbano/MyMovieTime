@@ -2,10 +2,15 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, nombre, año, duracion, sinopsis, generos, netflix;
+var email, password, nombre, apellido, fechnac, aux, nombre, año, duracion, sinopsis, netflix;
 
+var generos = [];
 
 var app = new Framework7({
+
+  /*  navbar: {
+      mdCenterTitle: true
+    },*/
     // App root element
     root: '#app',
     // App Name
@@ -102,7 +107,9 @@ $$(document).on('page:init', '.page[data-name="aportes"]', function (e) {
 
     $$(".noestaennetflix").on("click", guardarNo);
 
+    $$("#subirImg").on("click", selImage);
 
+   // $$("#enviarAporte").on("click", onSuccess);
     
     
 
@@ -126,8 +133,10 @@ $$(document).on('page:init', '.page[data-name="registrate"]', function (e) {
 
     $$("#continuar1").on("click", guardarDatos1);
 
-
     $$("#continuar1").on("click", verif);
+
+
+    
 
   
 
@@ -305,7 +314,14 @@ function guardarDatos2(){
 
 
 function verif(){
-  if(nombre == "" || nombre == null){
+
+if ($$("input").is(':empty')){
+  alert("Completa todos los campos");
+  mainView.router.navigate("/registrate/");
+}
+
+
+ /* if(nombre == "" || nombre == null){
       alert("El nombre es obligatorio");
       mainView.router.navigate("/registrate/");
   }
@@ -318,7 +334,7 @@ function verif(){
   if(fechnac == "" || fechnac == null){
       alert("La fecha de nacimiento es obligatoria");
       mainView.router.navigate("/registrate/");
-  }
+  }*/
 }
 
 function mostrar1(){
@@ -356,25 +372,22 @@ function guardarNo(){
 
 function guardarDatosAporte(){
 
+  var a;
+
   nombre = $$("#nombre").val();
   año = $$("#año").val();
   duracion = $$("#duracion").val();
   sinopsis = $$("#sinopsis").val();
 
-  /*if (aux == true){
-      if($$(".tocaBotonAp1:checked")){
-        generos = generos + ", " + $$(".tocaBotonAp1").val();
-      } 
-  }
 
-  if (aux == false){
-    if($$(".tocaBotonAp2:checked")){
-      generos = generos + ", " + $$(".tocaBotonAp2").val();
+for(i = 1; i <= 16; i++){
+    if( $$("#genero" + i).is(":checked") ){
+      
+      a = $$("#genero" + i).val();
+      generos.push(a);
+
     }
-    
-  }*/
-
-
+  }
 
 
   var data = {
@@ -382,14 +395,10 @@ function guardarDatosAporte(){
     año: año,
     duracion: duracion,
     sinopsis: sinopsis,
-    netflix: netflix
-
+    netflix: netflix,
+    generos: generos
   }
 
-
-    
-
-  
 
 
   if( $$(".esanime").is(":checked") ) {
@@ -450,11 +459,67 @@ function guardarDatosAporte(){
   }
 
 
-
+generos = [];
 
 
 
 };
 
 
+function selImage() {     // SELECCIONA DESDE GALERIA
+  navigator.camera.getPicture(onSuccess,onError,
+  {
+      quality: 50,
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+  });
+}
+
+
+
+
+
+function onSuccess(imageData) {
+    var storageRef = firebase.storage().ref();
+    var getFileBlob = function(url, cb) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+        xhr.addEventListener('load', function() {
+            cb(xhr.response);
+        });
+        xhr.send();
+    };
+
+    var blobToFile = function(blob, name) {
+        blob.lastModifiedDate = new Date();
+        blob.name = name;
+        return blob;
+    };
+
+    var getFileObject = function(filePathOrUrl, cb) {
+        getFileBlob(filePathOrUrl, function(blob) {
+            cb(blobToFile(blob, nombre + '.jpg'));
+        });
+    };
+
+    getFileObject(imageData, function(fileObject) {
+        var uploadTask = storageRef.child('images/' + nombre + '.jpg').put(fileObject);
+
+        uploadTask.on('state_changed', function(snapshot) {
+            console.log(snapshot);
+        }, function(error) {
+            console.log(error);
+        }, function() {
+            var downloadURL = uploadTask.snapshot.downloadURL;
+            console.log(downloadURL);
+            // handle image here
+        });
+    });
+
+}
+
+function onError() {
+        console.log("error camara");
+}
 

@@ -1,6 +1,12 @@
 /* Your app custom styles here */
 
 
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+.fuente{
+	font-family: 'Dancing Script', cursive;
+}
+
 .pad{
 	padding-top: 35%;
 }
@@ -133,4 +139,23 @@ placeholder{
 
 .marg{
 	margin-bottom: 30%;
+}
+
+.navbar .title {
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 10;
+    font-weight: var(--f7-navbar-title-font-weight);
+    display: inline-flex;
+    line-height: var(--f7-navbar-title-line-height);
+    text-align: center;
+    font-size: var(--f7-navbar-title-font-size);
+    margin-left: var(--f7-navbar-title-margin-left);
+    margin-right: var(--f7-navbar-title-margin-left);
+}
+
+.derecha{
+	text-align: right !important;
 }

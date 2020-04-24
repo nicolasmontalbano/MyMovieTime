@@ -1,15 +1,17 @@
 <!-- We don't need a full layout in this file because this page will be parsed with Ajax.  -->
 <div class="page" data-name="peliculas">
-    <!--<div class="navbar">
-        <div class="navbar-inner sliding">
-        <div class="left">
-            <a href="#" class="link back">
-            <i class="icon icon-back"></i>
-            <span class="ios-only">Atrás</span>
-            </a>
-        </div>
-        </div>
-    </div>-->
+    
+
+  <!-- Static Navbar -->
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner"> 
+        <div class="title fuente">My Movie Time</div>
+      </div>
+    </div>
+
+
+
 
     <!-- Additional "tabbar-labels" class -->
       <div class="toolbar tabbar tabbar-labels toolbar-bottom">
@@ -62,6 +64,8 @@ PAGINA DE PELICULAS
 
       <p><a href="#" data-popup=".scream" class="popup-open"><img src="img/scream.jpg" height="100vh" width="70vw"></a></p>
       <div class="popup popup-about scream">
+        <div class="page">
+        <div class="page-content">
         <div class="block">
           <h3 class="text-align-center letrablanca">Scream</h3>
           <!-- Close Popup -->
@@ -205,7 +209,14 @@ PAGINA DE PELICULAS
            
           
            
-          <p><a class="link popup-close letrablanca" href="#">Close popup</a></p>
+          <div class="block">
+            <div class="row">
+              <div class="col"><a class="button button-fill popup-close" href="#">Volver</a></div>
+              <div class="col"></div>
+            </div>
+          </div>
+        </div>
+        </div>
         </div>
       </div>
 
