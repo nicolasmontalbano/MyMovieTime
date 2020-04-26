@@ -399,7 +399,8 @@ for(i = 1; i <= 16; i++){
     duracion: duracion,
     sinopsis: sinopsis,
     netflix: netflix,
-    generos: generos
+    generos: generos,
+    imagen: urlimg
   }
 
 
@@ -461,8 +462,38 @@ for(i = 1; i <= 16; i++){
       //alert("Es una pelicula");
       console.log("Es una pelicula");
 
+  /*    refPeliculas.doc(titulo).get()
+        .then(function(querySnapshot){
+          querySnapshot.forEach(function(doc){
+            console.log("Titulo: " + doc.data().titulo);
+            console.log("Año: " + doc.data().año);
+            console.log("Generos: " + doc.data().generos);
+          });
+        })
 
-      
+        .catch(function(error){
+          console.log("Error: " + error);
+        });
+
+
+        REVISAR LA OBTENCION DE DATOS
+
+
+      */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -496,6 +527,8 @@ function onSuccess(imageData) {
     var getFileBlob = function(url, cb) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);
+        console.log("url de la imagen es: " + url);
+        urlimg = url;
         xhr.responseType = "blob";
         xhr.addEventListener('load', function() {
             cb(xhr.response);
@@ -509,14 +542,26 @@ function onSuccess(imageData) {
         return blob;
     };
 
+    function idRandom(){
+      var result = "";
+      var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var caracteresLength = caracteres.length;
+      for(var i = 0; i < 25; i++){
+        result += caracteres.charAt(Math.floor(Math.random() * caracteresLength ));
+      }
+      return result;
+
+    }
+
     var getFileObject = function(filePathOrUrl, cb) {
         getFileBlob(filePathOrUrl, function(blob) {
-            cb(blobToFile(blob, titulo + '.jpg'));
+            cb(blobToFile(blob, idRandom() + '.jpg'));
+            console.log("filePathOrUrl es: " + filePathOrUrl);
         });
     };
 
     getFileObject(imageData, function(fileObject) {
-        var uploadTask = storageRef.child('images/' + titulo + '.jpg').put(fileObject);
+        var uploadTask = storageRef.child('images/' + idRandom() + '.jpg').put(fileObject);
 
         uploadTask.on('state_changed', function(snapshot) {
             console.log(snapshot);
@@ -524,7 +569,7 @@ function onSuccess(imageData) {
             console.log(error);
         }, function() {
             var downloadURL = uploadTask.snapshot.downloadURL;
-            console.log("URL de la imagen: " + downloadURL);
+            console.log("downloadURL de la imagen: " + downloadURL);
             // handle image here
         });
     });
