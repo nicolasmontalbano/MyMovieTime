@@ -2,7 +2,7 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, titulo, año, duracion, sinopsis, netflix;
+var email, password, nombre, apellido, fechnac, aux, titulo, año, duracion, sinopsis, netflix, urlimg;
 
 var generos = [];
 
@@ -413,6 +413,8 @@ for(i = 1; i <= 16; i++){
       //alert("Es una serie de anime");
       console.log("Es una serie de anime");
 
+
+
     }
 
   }
@@ -442,6 +444,8 @@ for(i = 1; i <= 16; i++){
       //alert("Es una serie");
       console.log("Es una serie");
 
+
+
     }
 
   }
@@ -456,6 +460,11 @@ for(i = 1; i <= 16; i++){
 
       //alert("Es una pelicula");
       console.log("Es una pelicula");
+
+
+      
+
+
 
     }
 
@@ -515,7 +524,7 @@ function onSuccess(imageData) {
             console.log(error);
         }, function() {
             var downloadURL = uploadTask.snapshot.downloadURL;
-            console.log(downloadURL);
+            console.log("URL de la imagen: " + downloadURL);
             // handle image here
         });
     });
