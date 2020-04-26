@@ -2,7 +2,7 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, titulo, año, duracion, sinopsis, netflix, urlimg;
+var email, password, nombre, apellido, fechnac, aux, titulo, año, duracion, sinopsis, netflix, urlimg, pidotitulo, pidoaño, pidogeneros, pidosinopsis, pidourl, pidoduracion, pidonetflix, bloque;
 
 var generos = [];
 
@@ -159,19 +159,10 @@ $$(document).on('page:init', '.page[data-name="registrate2"]', function (e) {
 $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     
-/*
-    var searchbar = app.searchbar.create({
-  el: '.searchbar',
-  searchContainer: '.list',
-  searchIn: '.item-title',
-  on: {
-    search(sb, query, previousQuery) {
-      console.log(query, previousQuery);
+    function agregarPelicula(){
+      $$(".peli2").append(bloque);
+      console.log("Estoy dentro de agregar pelicula");
     }
-  }
-});
-
-*/
 
 
 
@@ -462,36 +453,43 @@ for(i = 1; i <= 16; i++){
       //alert("Es una pelicula");
       console.log("Es una pelicula");
 
-  /*    refPeliculas.doc(titulo).get()
-        .then(function(querySnapshot){
-          querySnapshot.forEach(function(doc){
-            console.log("Titulo: " + doc.data().titulo);
-            console.log("Año: " + doc.data().año);
-            console.log("Generos: " + doc.data().generos);
-          });
-        })
-
-        .catch(function(error){
-          console.log("Error: " + error);
-        });
 
 
-        REVISAR LA OBTENCION DE DATOS
+      refPeliculas.doc(titulo).get().then(function(doc) {
+  if (doc.exists) {
+      pidotitulo = doc.data().titulo;
+      pidoaño = doc.data().año;
+      pidoduracion = doc.data().duracion;
+      pidonetflix = doc.data().netflix;
+      pidogeneros = doc.data().generos;
+      pidosinopsis = doc.data().sinopsis;
+      pidourl = doc.data().imagen;
+      console.log("Titulo: " + pidotitulo);
+      console.log("Año: " + pidoaño);
+      console.log("Generos: " + pidogeneros);
+      console.log("Sinopsis: " + pidosinopsis);
+      console.log("URL: " + pidourl);
+      console.log("Duracion: " + pidoduracion);
+      console.log("Netflix: " + pidonetflix);
+//(acá arriba le digo que si encuentra un documento con esa clave -o sea con ese email- me cargue cada dato en cada variable)//
+  } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+  }
+}).catch(function(error) {
+  console.log("Error: ", error);
+});
 
 
-      */
+
+  // CON LOS DATOS PEDIDOS ARRIBA, GENERAR EL POPUP EN PELICULAS
+
+  bloque = '<p><a href="#" data-popup="."' + titulo + 'class="popup-open"><img src="' + imagen + '" height="100vh" width="70vw"></a></p>'
+
+  agregarPelicula();
 
 
-
-
-
-
-
-
-
-
-
-
+  
 
 
 
@@ -569,7 +567,6 @@ function onSuccess(imageData) {
             console.log(error);
         }, function() {
             var downloadURL = uploadTask.snapshot.downloadURL;
-            console.log("downloadURL de la imagen: " + downloadURL);
             // handle image here
         });
     });
