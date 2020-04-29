@@ -516,12 +516,45 @@ function selImage() {     // SELECCIONA DESDE GALERIA
   });
 }
 
+function idRandom(){
+  var result = "";
+  var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var caracteresLength = caracteres.length;
+  for(var i = 0; i < 25; i++){
+    result += caracteres.charAt(Math.floor(Math.random() * caracteresLength ));
+  }
+  return result;
 
+}
 
 
 
 function onSuccess(imageData) {
     var storageRef = firebase.storage().ref();
+
+    nombre = 'XsFnuWyUXrGFDE7gXfWeKull8.jpg';
+
+    storageRef.child('images/' + nombre).getDownloadURL().then(function(url) {
+      // `url` is the download URL for 'images/stars.jpg'
+
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function(event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+
+      // Or inserted into an <img> element:
+      var img = document.getElementById('myimg');
+      img.src = url;
+    }).catch(function(error) {
+      // Handle any errors
+    });
+
+
+
     var getFileBlob = function(url, cb) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);
@@ -540,16 +573,6 @@ function onSuccess(imageData) {
         return blob;
     };
 
-    function idRandom(){
-      var result = "";
-      var caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      var caracteresLength = caracteres.length;
-      for(var i = 0; i < 25; i++){
-        result += caracteres.charAt(Math.floor(Math.random() * caracteresLength ));
-      }
-      return result;
-
-    }
 
     var getFileObject = function(filePathOrUrl, cb) {
         getFileBlob(filePathOrUrl, function(blob) {
@@ -570,6 +593,8 @@ function onSuccess(imageData) {
             // handle image here
         });
     });
+
+
 
 }
 
