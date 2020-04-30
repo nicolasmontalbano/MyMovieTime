@@ -391,7 +391,7 @@ for(i = 1; i <= 16; i++){
     sinopsis: sinopsis,
     netflix: netflix,
     generos: generos,
-    imagen: urlimg
+    imagen: direccionImagen
   }
 
 
@@ -532,33 +532,23 @@ function idRandom(){
 function onSuccess(imageData) {
     var storageRef = firebase.storage().ref();
 
-    nombre = 'XsFnuWyUXrGFDE7gXfWeKull8.jpg';
+    nombreAleatorio = idRandom();
 
-    storageRef.child('images/' + nombre).getDownloadURL().then(function(url) {
-      // `url` is the download URL for 'images/stars.jpg'
+    nombreImagen = nombreAleatorio + '.jpg';
 
-      // This can be downloaded directly:
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function(event) {
-        var blob = xhr.response;
-      };
-      xhr.open('GET', url);
-      xhr.send();
+    direccionImagen = 'images/' + nombreImagen;
 
-      // Or inserted into an <img> element:
-      var img = document.getElementById('myimg');
-      img.src = url;
-    }).catch(function(error) {
-      // Handle any errors
-    });
+    console.log("Nombre aleatorio: " + nombreAleatorio);
+    console.log("Nombre imagen: " + nombreImagen);
+    console.log("Direccion imagen: " + direccionImagen);
+
+    
 
 
 
     var getFileBlob = function(url, cb) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url);
-        console.log("url de la imagen es: " + url);
         urlimg = url;
         xhr.responseType = "blob";
         xhr.addEventListener('load', function() {
@@ -576,25 +566,40 @@ function onSuccess(imageData) {
 
     var getFileObject = function(filePathOrUrl, cb) {
         getFileBlob(filePathOrUrl, function(blob) {
-            cb(blobToFile(blob, idRandom() + '.jpg'));
-            console.log("filePathOrUrl es: " + filePathOrUrl);
+            cb(blobToFile(blob, nombreImagen));
         });
     };
 
     getFileObject(imageData, function(fileObject) {
-        var uploadTask = storageRef.child('images/' + idRandom() + '.jpg').put(fileObject);
+        var uploadTask = storageRef.child(direccionImagen).put(fileObject);
 
         uploadTask.on('state_changed', function(snapshot) {
             console.log(snapshot);
         }, function(error) {
             console.log(error);
         }, function() {
-            var downloadURL = uploadTask.snapshot.downloadURL;
-            // handle image here
-        });
-    });
+            
+            storageRef.child(direccionImagen).getDownloadURL().then(function(url) {
+              // `url` is the download URL for 'images/stars.jpg'
 
+              // This can be downloaded directly:
+              var xhr = new XMLHttpRequest();
+              xhr.responseType = 'blob';
+              xhr.onload = function(event) {
+                var blob = xhr.response;
+              };
+              xhr.open('GET', url);
+              xhr.send();
 
+              // Or inserted into an <img> element:
+              var img = document.getElementById('myimg');
+              img.src = url;
+            }).catch(function(error) {
+              // Handle any errors
+            });
+
+                });
+            });
 
 }
 
