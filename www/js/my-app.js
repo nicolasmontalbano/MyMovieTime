@@ -109,6 +109,8 @@ $$(document).on('page:init', '.page[data-name="aportes"]', function (e) {
 
     $$("#subirImg").on("click", selImage);
 
+    $$("#enviarAporte").on("click, agregarPopup");
+
 
    // $$("#enviarAporte").on("click", onSuccess);
     
@@ -159,10 +161,10 @@ $$(document).on('page:init', '.page[data-name="registrate2"]', function (e) {
 $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     
-    function agregarPelicula(){
+  /*  function agregarPelicula(){
       $$(".peli2").append(bloque);
       console.log("Estoy dentro de agregar pelicula");
-    }
+    }*/
 
 
 
@@ -484,9 +486,10 @@ for(i = 1; i <= 16; i++){
 
   // CON LOS DATOS PEDIDOS ARRIBA, GENERAR EL POPUP EN PELICULAS
 
-  bloque = '<p><a href="#" data-popup="."' + titulo + 'class="popup-open"><img src="' + imagen + '" height="100vh" width="70vw"></a></p>'
+  bloque = '<p><a href="#" data-popup="."' + pidotitulo + 'class="popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
 
-  agregarPelicula();
+  $$(".peli2").append(bloque);
+  
 
 
   
@@ -606,4 +609,9 @@ function onSuccess(imageData) {
 function onError() {
         console.log("error camara");
 }
-
+/*
+function agregarPopup(){
+  bloque = '<p><a href="#" data-popup="."' + pidotitulo + 'class="popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
+  $$(".peli2").append(bloque);
+}
+*/
