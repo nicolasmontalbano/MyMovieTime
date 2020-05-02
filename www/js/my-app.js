@@ -51,7 +51,8 @@ $$(document).on('deviceready', function() {
     console.log("Device is ready!");
 
     /*VARIABLES DE BBDD*/
-
+    $$("#emailL").val("usuario@usuario.com");
+  $$("#passwordL").val("usuario");
   db = firebase.firestore();
   refUsuarios = db.collection("USUARIOS");
   refTiposUsuarios= db.collection("TIPOS_USUARIOS");
@@ -160,13 +161,15 @@ $$(document).on('page:init', '.page[data-name="registrate2"]', function (e) {
 // Option 3. Using live 'page:init' event handlers for each page
 $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
+    getAllMovies();
+    if(aux == 1){
+      $$(".peli2").append(bloquePelicula);
+      console.log("Estoy adentro de aux 1");
+    }
+
     
-  /*  function agregarPelicula(){
-      $$(".peli2").append(bloque);
-      console.log("Estoy dentro de agregar pelicula");
-    }*/
 
-
+    
 
 
 
@@ -241,7 +244,6 @@ $$("#continuar3").on("click", function(){
 /*MIS FUNCIONES*/
 
 function login(){
-
   var emailL = $$("#emailL").val();
   var passwordL = $$("#passwordL").val();
 
@@ -466,13 +468,17 @@ for(i = 1; i <= 16; i++){
       pidogeneros = doc.data().generos;
       pidosinopsis = doc.data().sinopsis;
       pidourl = doc.data().imagen;
-      console.log("Titulo: " + pidotitulo);
-      console.log("Año: " + pidoaño);
-      console.log("Generos: " + pidogeneros);
-      console.log("Sinopsis: " + pidosinopsis);
-      console.log("URL: " + pidourl);
-      console.log("Duracion: " + pidoduracion);
-      console.log("Netflix: " + pidonetflix);
+      pidotitulo2 = pidotitulo.trim();
+      console.log("Titulo pedido: " + pidotitulo);
+      console.log("Año pedido: " + pidoaño);
+      console.log("Generos pedidos: " + pidogeneros);
+      console.log("Sinopsis pedida: " + pidosinopsis);
+      console.log("URL pedida: " + pidourl);
+      console.log("Duracion pedida: " + pidoduracion);
+      console.log("Netflix pedido: " + pidonetflix);
+      //bloquePelicula = '<p><a href="#" data-popup=".' + pidotitulo + '" class = "popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
+      //console.log(bloquePelicula);
+      
 //(acá arriba le digo que si encuentra un documento con esa clave -o sea con ese email- me cargue cada dato en cada variable)//
   } else {
       // doc.data() will be undefined in this case
@@ -486,11 +492,11 @@ for(i = 1; i <= 16; i++){
 
   // CON LOS DATOS PEDIDOS ARRIBA, GENERAR EL POPUP EN PELICULAS
 
-  bloque = '<p><a href="#" data-popup="."' + pidotitulo + 'class="popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
+ // bloque = '<p><a href="#" data-popup="."' + pidotitulo + 'class="popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
 
-  $$(".peli2").append(bloque);
+ // $$(".peli2").append(bloque);
   
-
+  //agregarPopup();
 
   
 
@@ -508,6 +514,149 @@ generos = [];
 
 
 };
+async function getAllMovies(){
+    
+    var storageRef = firebase.storage().ref();
+  const movies =  db.collection('PELICULAS').get().then(function(movies){
+    movies.forEach(doc => {
+    pidotitulo = doc.data().titulo;
+      pidoaño = doc.data().año;
+      pidoduracion = doc.data().duracion;
+      pidonetflix = doc.data().netflix;
+      pidogeneros = doc.data().generos;
+      pidosinopsis = doc.data().sinopsis;
+      pidourl = doc.data().imagen;
+      pidotitulo2 = pidotitulo.trim();
+      console.log("Titulo pedido: " + pidotitulo);
+      console.log("Año pedido: " + pidoaño);
+      console.log("Generos pedidos: " + pidogeneros);
+      console.log("Sinopsis pedida: " + pidosinopsis);
+      console.log("URL pedida: " + pidourl);
+      console.log("Duracion pedida: " + pidoduracion);
+      console.log("Netflix pedido: " + pidonetflix);
+      storageRef.child(pidourl).getDownloadURL().then(function(url){
+      //  $$("#listaPeliculas").append('<p><a href="#" data-popup=".scream" class="popup-open"><img src="' + url +'" height="100vh" width="70vw"></a></p>');
+        $$("#listaPeliculas").append(
+      
+      `<div class="col ${pidotitulo}">
+
+
+      <p><a href="#" data-popup=".scream" class="popup-open"><img src=${url} height="100vh" width="70vw"></a></p>
+      <div class="popup popup-about scream">
+        <div class="page">
+        <div class="page-content">
+        <div class="block">
+          <h3 class="text-align-center letrablanca">${pidotitulo}</h3>
+
+
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Género/s:
+                </div>
+                <div class="col letrablanca">
+                  ${pidogeneros}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Año:
+                </div>
+                <div class="col letrablanca">
+                  ${pidoaño}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Duración:
+                </div>
+                <div class="col letrablanca">
+                  ${pidoduracion}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Netflix: 
+                </div>
+                <div class="col letrablanca">
+                  ${pidonetflix}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Sinopsis:
+                </div>
+                <div class="col letrablanca">
+                ${pidosinopsis}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="row">
+            <div class="col-50">
+              <div class="infoizq letrablanca">Valoración</div>
+              <div class="letrablanca">Valoracion</div>
+            </div>
+
+            <div class="col-50">
+              <div class="infoizq letrablanca">Valoración por género</div>
+              <div class="letrablanca">VALORACION POR GENERO</div>
+            </div>
+          </div>
+        </div>
+
+
+    
+          
+           
+          <div class="block">
+            <div class="row">
+              <div class="col"><a class="button button-fill popup-close" href="#">Volver</a></div>
+              <div class="col"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>
+      </div>`);
+      });
+  });
+  });
+}
 
 
 function selImage() {     // SELECCIONA DESDE GALERIA
@@ -609,9 +758,20 @@ function onSuccess(imageData) {
 function onError() {
         console.log("error camara");
 }
-/*
+
+
 function agregarPopup(){
-  bloque = '<p><a href="#" data-popup="."' + pidotitulo + 'class="popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
-  $$(".peli2").append(bloque);
+
+  if( $$(".noesanime").is(":checked") ) {
+
+    if( $$(".pelicula").is(":checked") ){
+      console.log("Es una película");
+      bloquePelicula = '<p><a href="#" data-popup=".' + pidotitulo + '" class = "popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>';
+      aux = 1;
+    }
+  }
+
 }
-*/
+
+
+// LA FUNCION AGREGAR POPUP ME DA AUX = 1 SI ES UNA PELICULA, EL PAGE INIT DE PELICULAS ESTA EN LA LINEA 160

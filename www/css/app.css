@@ -160,3 +160,7 @@ placeholder{
 	text-align: right !important;
 }
 
+#listaPeliculas{
+    display:flex;
+    flex-direction: column;
+}
