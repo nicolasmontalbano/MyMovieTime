@@ -2,7 +2,7 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, titulo, año, duracion, sinopsis, netflix, urlimg, pidotitulo, pidoaño, pidogeneros, pidosinopsis, pidourl, pidoduracion, pidonetflix, bloque;
+var email, password, nombre, apellido, fechnac, aux, titulo, titulo2, año, duracion, sinopsis, netflix, urlimg, pidotitulo, pidotitulo2, pidoaño, pidogeneros, pidosinopsis, pidourl, pidoduracion, pidonetflix, bloque;
 
 var generos = [];
 
@@ -162,10 +162,7 @@ $$(document).on('page:init', '.page[data-name="registrate2"]', function (e) {
 $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
     getAllMovies();
-    if(aux == 1){
-      $$(".peli2").append(bloquePelicula);
-      console.log("Estoy adentro de aux 1");
-    }
+    
 
     
 
@@ -373,6 +370,8 @@ function guardarDatosAporte(){
   var a;
 
   titulo = $$("#titulo").val();
+  titulo2 = titulo.trim();
+  titulo2 = titulo2.replace(/ /g, "");
   año = $$("#año").val();
   duracion = $$("#duracion").val();
   sinopsis = $$("#sinopsis").val();
@@ -390,6 +389,7 @@ for(i = 1; i <= 16; i++){
 
   var data = {
     titulo: titulo,
+    titulo2: titulo2,
     año: año,
     duracion: duracion,
     sinopsis: sinopsis,
@@ -468,8 +468,8 @@ for(i = 1; i <= 16; i++){
       pidogeneros = doc.data().generos;
       pidosinopsis = doc.data().sinopsis;
       pidourl = doc.data().imagen;
-      pidotitulo2 = pidotitulo.trim();
-      console.log("Titulo pedido: " + pidotitulo);
+      pidotitulo2 = doc.data().titulo2;
+      console.log("Titulo pedido: " + pidotitulo2);
       console.log("Año pedido: " + pidoaño);
       console.log("Generos pedidos: " + pidogeneros);
       console.log("Sinopsis pedida: " + pidosinopsis);
@@ -514,19 +514,20 @@ generos = [];
 
 
 };
-async function getAllMovies(){
+ function getAllMovies(){
     
     var storageRef = firebase.storage().ref();
   const movies =  db.collection('PELICULAS').get().then(function(movies){
     movies.forEach(doc => {
-    pidotitulo = doc.data().titulo;
+      pidotitulo = doc.data().titulo;
       pidoaño = doc.data().año;
       pidoduracion = doc.data().duracion;
       pidonetflix = doc.data().netflix;
       pidogeneros = doc.data().generos;
       pidosinopsis = doc.data().sinopsis;
       pidourl = doc.data().imagen;
-      pidotitulo2 = pidotitulo.trim();
+      pidotitulo2 = doc.data().titulo2;
+      console.log("TITULO SIN ESPACIOS: " + pidotitulo2);
       console.log("Titulo pedido: " + pidotitulo);
       console.log("Año pedido: " + pidoaño);
       console.log("Generos pedidos: " + pidogeneros);
@@ -534,19 +535,26 @@ async function getAllMovies(){
       console.log("URL pedida: " + pidourl);
       console.log("Duracion pedida: " + pidoduracion);
       console.log("Netflix pedido: " + pidonetflix);
+
+
+
+  
+
+
+
       storageRef.child(pidourl).getDownloadURL().then(function(url){
       //  $$("#listaPeliculas").append('<p><a href="#" data-popup=".scream" class="popup-open"><img src="' + url +'" height="100vh" width="70vw"></a></p>');
         $$("#listaPeliculas").append(
       
-      `<div class="col ${pidotitulo}">
+      
 
 
-      <p><a href="#" data-popup=".scream" class="popup-open"><img src=${url} height="100vh" width="70vw"></a></p>
-      <div class="popup popup-about scream">
+      `<p><a href="#" data-popup=".${pidotitulo2}" class="popup-open"><img src=${url} height="100vh" width="70vw"></a></p>
+      <div class="popup popup-about ${pidotitulo2}">
         <div class="page">
         <div class="page-content">
         <div class="block">
-          <h3 class="text-align-center letrablanca">${pidotitulo}</h3>
+          <h3 class="text-align-center letrablanca"> ${pidotitulo} </h3>
 
 
         <div class="block">
@@ -651,8 +659,8 @@ async function getAllMovies(){
         </div>
         </div>
         </div>
-        </div>
-      </div>`);
+        </div>`
+      );
       });
   });
   });
@@ -760,7 +768,7 @@ function onError() {
 }
 
 
-function agregarPopup(){
+/*function agregarPopup(){
 
   if( $$(".noesanime").is(":checked") ) {
 
@@ -771,7 +779,8 @@ function agregarPopup(){
     }
   }
 
-}
+}*/
 
 
-// LA FUNCION AGREGAR POPUP ME DA AUX = 1 SI ES UNA PELICULA, EL PAGE INIT DE PELICULAS ESTA EN LA LINEA 160
+
+
