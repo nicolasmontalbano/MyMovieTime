@@ -544,6 +544,13 @@ generos = [];
 
       storageRef.child(pidourl).getDownloadURL().then(function(url){
       //  $$("#listaPeliculas").append('<p><a href="#" data-popup=".scream" class="popup-open"><img src="' + url +'" height="100vh" width="70vw"></a></p>');
+
+
+
+      console.log("TITULO: " + pidotitulo); //Se repite el mismo
+
+
+
         $$("#listaPeliculas").append(
       
       
