@@ -536,25 +536,35 @@ generos = [];
       console.log("Duracion pedida: " + pidoduracion);
       console.log("Netflix pedido: " + pidonetflix);
 
+      arrMovie = [pidotitulo, pidotitulo2, pidoaño, pidoduracion, pidonetflix, pidogeneros, pidosinopsis, pidourl];
+
 
 
   
-
+      console.log("TITULO EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[0]);
+    /*console.log("TITULO2 EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[1]);
+      console.log("AÑO EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[2]);
+      console.log("DURACION EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[3]);
+      console.log("NETFLIX EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[4]);
+      console.log("GENEROS EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[5]);
+      console.log("SINOPSIS EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[6]);
+      console.log("URL EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[7]);*/
+      
 
 
       storageRef.child(pidourl).getDownloadURL().then(function(url){
       //  $$("#listaPeliculas").append('<p><a href="#" data-popup=".scream" class="popup-open"><img src="' + url +'" height="100vh" width="70vw"></a></p>');
 
-
-
+      console.log("TITULO EN LOS ARREGLOS DESPUES DEL CHILD: " + arrMovie[0]);
+      console.log("URL DE IMAGEN DENTRO DEL CHILD: " + url);
       console.log("TITULO: " + pidotitulo); //Se repite el mismo
 
 
-
+      console.log("TITULO DEL ARRAY: " + arrMovie[0]);
         $$("#listaPeliculas").append(
+      //` + arrMovie[1] + `
       
       
-
 
       `<p><a href="#" data-popup=".${pidotitulo2}" class="popup-open"><img src=${url} height="100vh" width="70vw"></a></p>
       <div class="popup popup-about ${pidotitulo2}">
