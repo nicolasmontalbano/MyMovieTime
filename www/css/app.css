@@ -160,3 +160,7 @@ placeholder{
 	text-align: right !important;
 }
 
+#a,#b,#c,#d,#e{
+    height: 13%;
+    width: 13%;
+}

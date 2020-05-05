@@ -2,7 +2,14 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, titulo, titulo2, año, duracion, sinopsis, netflix, urlimg, pidotitulo, pidotitulo2, pidoaño, pidogeneros, pidosinopsis, pidourl, pidoduracion, pidonetflix, bloque;
+var email, password, nombre, apellido, fechnac, aux, titulo, titulo2, ano, duracion, sinopsis, netflix, urlimg, pidotitulo, pidotitulo2, pidoano, pidogeneros, pidosinopsis, pidourl, pidoduracion, pidonetflix, bloque;
+
+var sumaVotos = 0;
+var cantVotos = 0;
+var promedio = 0;
+var valoracion = 0;
+var resultado = 0;
+var estrellas = ['a','b','c','d','e'];
 
 var generos = [];
 
@@ -164,15 +171,20 @@ $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
     getAllMovies();
     
 
+$$("#enviarValor").on("click", enviarValor);
     
-
-    
-
-
 
 })
 
 
+
+$$(".mipopup").on("click", function(){
+
+  console.log("ESTOY ABRIENDO EL POPUP");
+
+
+
+})
 
 
 
@@ -372,7 +384,7 @@ function guardarDatosAporte(){
   titulo = $$("#titulo").val();
   titulo2 = titulo.trim();
   titulo2 = titulo2.replace(/ /g, "");
-  año = $$("#año").val();
+  ano = $$("#año").val();
   duracion = $$("#duracion").val();
   sinopsis = $$("#sinopsis").val();
 
@@ -390,12 +402,13 @@ for(i = 1; i <= 16; i++){
   var data = {
     titulo: titulo,
     titulo2: titulo2,
-    año: año,
+    año: ano,
     duracion: duracion,
     sinopsis: sinopsis,
     netflix: netflix,
     generos: generos,
-    imagen: direccionImagen
+    imagen: direccionImagen,
+    valoracion: valoracion
   }
 
 
@@ -462,15 +475,16 @@ for(i = 1; i <= 16; i++){
       refPeliculas.doc(titulo).get().then(function(doc) {
   if (doc.exists) {
       pidotitulo = doc.data().titulo;
-      pidoaño = doc.data().año;
+      pidoano = doc.data().ano;
       pidoduracion = doc.data().duracion;
       pidonetflix = doc.data().netflix;
       pidogeneros = doc.data().generos;
       pidosinopsis = doc.data().sinopsis;
       pidourl = doc.data().imagen;
       pidotitulo2 = doc.data().titulo2;
+      pidovaloracion = doc.data().valoracion;
       console.log("Titulo pedido: " + pidotitulo2);
-      console.log("Año pedido: " + pidoaño);
+      console.log("Año pedido: " + pidoano);
       console.log("Generos pedidos: " + pidogeneros);
       console.log("Sinopsis pedida: " + pidosinopsis);
       console.log("URL pedida: " + pidourl);
@@ -514,66 +528,213 @@ generos = [];
 
 
 };
- function getAllMovies(){
-    
-    var storageRef = firebase.storage().ref();
-  const movies =  db.collection('PELICULAS').get().then(function(movies){
-    movies.forEach(doc => {
-      pidotitulo = doc.data().titulo;
-      pidoaño = doc.data().año;
-      pidoduracion = doc.data().duracion;
-      pidonetflix = doc.data().netflix;
-      pidogeneros = doc.data().generos;
-      pidosinopsis = doc.data().sinopsis;
-      pidourl = doc.data().imagen;
-      pidotitulo2 = doc.data().titulo2;
-      console.log("TITULO SIN ESPACIOS: " + pidotitulo2);
-      console.log("Titulo pedido: " + pidotitulo);
-      console.log("Año pedido: " + pidoaño);
-      console.log("Generos pedidos: " + pidogeneros);
-      console.log("Sinopsis pedida: " + pidosinopsis);
-      console.log("URL pedida: " + pidourl);
-      console.log("Duracion pedida: " + pidoduracion);
-      console.log("Netflix pedido: " + pidonetflix);
+ function getAllMovies() {
+  let arrayOfMovies = [];
 
-      arrMovie = [pidotitulo, pidotitulo2, pidoaño, pidoduracion, pidonetflix, pidogeneros, pidosinopsis, pidourl];
-
-
-
-  
-      console.log("TITULO EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[0]);
-    /*console.log("TITULO2 EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[1]);
-      console.log("AÑO EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[2]);
-      console.log("DURACION EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[3]);
-      console.log("NETFLIX EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[4]);
-      console.log("GENEROS EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[5]);
-      console.log("SINOPSIS EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[6]);
-      console.log("URL EN LOS ARREGLOS ANTES DEL CHILD: " + arrMovie[7]);*/
-      
-
-
-      storageRef.child(pidourl).getDownloadURL().then(function(url){
-      //  $$("#listaPeliculas").append('<p><a href="#" data-popup=".scream" class="popup-open"><img src="' + url +'" height="100vh" width="70vw"></a></p>');
-
-      console.log("TITULO EN LOS ARREGLOS DESPUES DEL CHILD: " + arrMovie[0]);
-      console.log("URL DE IMAGEN DENTRO DEL CHILD: " + url);
-      console.log("TITULO: " + pidotitulo); //Se repite el mismo
-
-
-      console.log("TITULO DEL ARRAY: " + arrMovie[0]);
+  db.collection('PELICULAS').get().then(function(resultMovies) {
+    workWithArray(resultMovies, function(listOfMoviesToAppend){
+      console.log(listOfMoviesToAppend);
+      listOfMoviesToAppend.forEach(movieToAppend => {
         $$("#listaPeliculas").append(
-      //` + arrMovie[1] + `
-      
-      
+                    `<p><a href="#" data-popup=".${movieToAppend.pidotitulo2}" id="${movieToAppend.pidotitulo}" class="popup-open mipopup"><img src=${movieToAppend.url} height="100vh" class="mipopup" width="70vw"></a></p>
+      <div class="popup popup-about ${movieToAppend.pidotitulo2}">
+        <div class="page">
+        <div class="page-content">
+        <div class="block">
+          <h3 class="text-align-center letrablanca"> ${movieToAppend.pidotitulo} </h3>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Género/s:
+                </div>
+                <div class="col letrablanca">
+                  ${movieToAppend.pidogeneros}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Año:
+                </div>
+                <div class="col letrablanca">
+                  ${movieToAppend.pidoano}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Duración:
+                </div>
+                <div class="col letrablanca">
+                  ${movieToAppend.pidoduracion}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Netflix: 
+                </div>
+                <div class="col letrablanca">
+                  ${movieToAppend.pidonetflix}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Sinopsis:
+                </div>
+                <div class="col letrablanca">
+                ${movieToAppend.pidosinopsis}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col-50">
+              <div class="infoizq letrablanca">Valoración (1-10)</div>
+              <div class="letrablanca">
 
-      `<p><a href="#" data-popup=".${pidotitulo2}" class="popup-open"><img src=${url} height="100vh" width="70vw"></a></p>
+                <div class="botones" id="linea">
+                  <input type="text" id="valor" placeholder="Ingresa tu valoración" required validate pattern="[1-10]*" data-error-message="Only numbers please!">
+                
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="col-50">
+              <div class="col"><a class="button button-fill popup-close" id="enviarValor" href="#">Enviar</a></div>
+            </div>
+
+          </div>
+        </div>
+          <div class="block">
+            <div class="row">
+              <div class="col"><a class="button button-fill popup-close" href="#">Volver</a></div>
+              <div class="col"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>`
+        );
+      })
+      
+    })
+  });
+
+    
+}
+
+function workWithArray(arrayMovies, callback){
+  arrayOfMoviesT = [];
+  var storageRef = firebase.storage().ref();
+  let count = 0;
+  console.log(arrayMovies.docs.length);
+  arrayMovies.forEach(doc => {
+    getUrlImage(doc.data().imagen, storageRef, function(value){
+      arrayOfMoviesT.push({
+            pidotitulo : doc.data().titulo,
+            pidoano : doc.data().año,
+            pidoduracion : doc.data().duracion,
+            pidonetflix : doc.data().netflix,
+            pidogeneros : doc.data().generos,
+            pidosinopsis : doc.data().sinopsis,
+            pidourl : doc.data().imagen,
+            pidotitulo2 : doc.data().titulo2,
+            url: value
+      });
+      count++;
+      if(count == arrayMovies.docs.length){
+      callback(arrayOfMoviesT);
+    }
+    });
+    
+  })
+}
+
+function getUrlImage(urlImg, storageRef, callback){
+  storageRef.child(urlImg).getDownloadURL().then(function(url) {
+    callback(url);
+  });
+}
+/*function prepareMovies(arrayOfMovies, callback){
+  var storageRef = firebase.storage().ref();
+  db.collection('PELICULAS').get().then(function(movies) {
+        movies.forEach(doc => {
+            pidotitulo = doc.data().titulo;
+            pidoano = doc.data().año;
+            pidoduracion = doc.data().duracion;
+            pidonetflix = doc.data().netflix;
+            pidogeneros = doc.data().generos;
+            pidosinopsis = doc.data().sinopsis;
+            pidourl = doc.data().imagen;
+            pidotitulo2 = doc.data().titulo2;
+            arrMovie = [pidotitulo, pidotitulo2, pidoaño, pidoduracion, pidonetflix, pidogeneros, pidosinopsis, pidourl];
+            storageRef.child(pidourl).getDownloadURL().then(function(url) {
+              arrayOfMovies.push({
+                titulo: pidotitulo,
+                titulo2: pidotitulo2,
+                ano: pidoano,
+                duracion: pidoduracion,
+                netflix: pidonetflix,
+                genero: pidogeneros,
+                sinopsis: pidosinopsis,
+                url: url
+              });
+            });
+        });
+        callback();
+    });
+}*/
+/*function getAllMovies() {
+
+    var storageRef = firebase.storage().ref();
+    const movies = db.collection('PELICULAS').get().then(function(movies) {
+        movies.forEach(doc => {
+            pidotitulo = doc.data().titulo;
+            pidoaño = doc.data().año;
+            pidoduracion = doc.data().duracion;
+            pidonetflix = doc.data().netflix;
+            pidogeneros = doc.data().generos;
+            pidosinopsis = doc.data().sinopsis;
+            pidourl = doc.data().imagen;
+            pidotitulo2 = doc.data().titulo2;
+            arrMovie = [pidotitulo, pidotitulo2, pidoaño, pidoduracion, pidonetflix, pidogeneros, pidosinopsis, pidourl];
+            storageRef.child(pidourl).getDownloadURL().then(function(url) {
+                $$("#listaPeliculas").append(
+                    `<p><a href="#" data-popup=".${pidotitulo2}" class="popup-open"><img src=${url} height="100vh" width="70vw"></a></p>
       <div class="popup popup-about ${pidotitulo2}">
         <div class="page">
         <div class="page-content">
         <div class="block">
           <h3 class="text-align-center letrablanca"> ${pidotitulo} </h3>
-
-
         <div class="block">
           <div class="row">
             <div class="col">
@@ -588,7 +749,6 @@ generos = [];
             </div>
           </div>
         </div>
-
         <div class="block">
           <div class="row">
             <div class="col">
@@ -603,7 +763,6 @@ generos = [];
             </div>
           </div>
         </div>
-
         <div class="block">
           <div class="row">
             <div class="col">
@@ -618,7 +777,6 @@ generos = [];
             </div>
           </div>
         </div>
-
         <div class="block">
           <div class="row">
             <div class="col">
@@ -633,7 +791,6 @@ generos = [];
             </div>
           </div>
         </div>
-
         <div class="block">
           <div class="row">
             <div class="col">
@@ -648,7 +805,6 @@ generos = [];
             </div>
           </div>
         </div>
-
         <div class="block">
           <div class="row">
             <div class="col-50">
@@ -662,11 +818,6 @@ generos = [];
             </div>
           </div>
         </div>
-
-
-    
-          
-           
           <div class="block">
             <div class="row">
               <div class="col"><a class="button button-fill popup-close" href="#">Volver</a></div>
@@ -677,13 +828,11 @@ generos = [];
         </div>
         </div>
         </div>`
-      );
-      });
-  });
-  });
-}
-
-
+                );
+            });
+        });
+    });
+}*/
 function selImage() {     // SELECCIONA DESDE GALERIA
   navigator.camera.getPicture(onSuccess,onError,
   {
@@ -785,19 +934,18 @@ function onError() {
 }
 
 
-/*function agregarPopup(){
-
-  if( $$(".noesanime").is(":checked") ) {
-
-    if( $$(".pelicula").is(":checked") ){
-      console.log("Es una película");
-      bloquePelicula = '<p><a href="#" data-popup=".' + pidotitulo + '" class = "popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>';
-      aux = 1;
-    }
-  }
-
-}*/
 
 
+
+
+
+function enviarValor(){
+  valor =  $$("#valor").val();
+  sumaVotos = sumaVotos + valor;
+  cantVotos = cantVotos + 1;
+  promedio = sumaVotos / cantVotos;
+
+
+}
 
 
