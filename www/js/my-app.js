@@ -172,10 +172,6 @@ $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
     
 
 $$("#enviarValor").on("click", enviarValor);
-    
-
-})
-
 
 
 $$(".mipopup").on("click", function(){
@@ -185,6 +181,13 @@ $$(".mipopup").on("click", function(){
 
 
 })
+    
+
+})
+
+
+
+
 
 
 
