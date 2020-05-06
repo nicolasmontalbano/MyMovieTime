@@ -2,7 +2,7 @@
 // If we need to use custom DOM library, let's save it to $$ variable:
 var $$ = Dom7;
 
-var email, password, nombre, apellido, fechnac, aux, titulo, titulo2, ano, duracion, sinopsis, netflix, urlimg, pidotitulo, pidotitulo2, pidoano, pidogeneros, pidosinopsis, pidourl, pidoduracion, pidonetflix, bloque;
+var email, password, nombre, apellido, fechnac, aux, mailPerfil, titulo, titulo2, ano, duracion, sinopsis, netflix, urlimg, pidotitulo, pidotitulo2, pidoano, pidogeneros, pidosinopsis, pidourl, pidoduracion, pidonetflix, bloque;
 
 var sumaVotos = 0;
 var cantVotos = 0;
@@ -174,19 +174,22 @@ $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
 $$("#enviarValor").on("click", enviarValor);
 
 
-$$(".mipopup").on("click", function(){
-
-  console.log("ESTOY ABRIENDO EL POPUP");
-
+$$(".mipopup").on("click", obtenerID);
 
 
 })
-    
+
+
+// Option 5. Using live 'page:init' event handlers for each page
+$$(document).on('page:init', '.page[data-name="perfil"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    console.log(e);
+
+
+    getInfo();
+
 
 })
-
-
-
 
 
 
@@ -325,10 +328,7 @@ function guardarDatos2(){
 
 function verif(){
 
-if ($$("input").is(':empty')){
-  alert("Completa todos los campos");
-  mainView.router.navigate("/registrate/");
-}
+
 
 
  /* if(nombre == "" || nombre == null){
@@ -622,7 +622,7 @@ generos = [];
               <div class="letrablanca">
 
                 <div class="botones" id="linea">
-                  <input type="text" id="valor" placeholder="Ingresa tu valoración" required validate pattern="[1-10]*" data-error-message="Only numbers please!">
+                  <input type="text" id="${movieToAppend.pidotitulo2}" placeholder="Ingresa tu valoración" required validate pattern="[1-10]*" data-error-message="Only numbers please!">
                 
                 </div>
 
@@ -936,7 +936,51 @@ function onError() {
         console.log("error camara");
 }
 
+function getInfo(){
+  var user = firebase.auth().currentUser;
+  var name, email, photoUrl, uid, emailVerified;
 
+  if (user != null) {
+    name = user.displayName;
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+    uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
+                     // this value to authenticate with your backend server, if
+                     // you have one. Use User.getToken() instead.
+
+   /* $$("#nombrePerfil").val(name);
+    $$("#mailPerfil").val(emailVerified);*/
+
+    mailPerfil = email;
+    console.log(mailPerfil);
+  }
+
+
+  refUsuarios.doc(mailPerfil).get().then(function(doc) {
+  if (doc.exists) {
+      nombrePerfil = doc.data().nombre;
+      apellidoPerfil = doc.data().apellido;
+      nacimientoPerfil = doc.data().fechnac;
+      console.log("Nombre en perfil: " + nombrePerfil);
+      console.log("Apellido en perfil: " + apellidoPerfil);
+      console.log("Fecha de nacimiento en perfil: " + nacimientoPerfil);
+      console.log("Mail del perfil: " + mailPerfil);
+      $$("#nombrePerfil").val(nombrePerfil);
+      $$("#apellidoPerfil").val(apellidoPerfil);
+      $$("#nacimientoPerfil").val(nacimientoPerfil);
+      $$("#mailPerfil").val(mailPerfil);
+
+  } else {
+      console.log("No such document!");
+  }
+}).catch(function(error) {
+  console.log("Error: ", error);
+});
+
+
+
+}
 
 
 
@@ -951,4 +995,6 @@ function enviarValor(){
 
 }
 
-
+function obtenerID(){
+  alert(this.id);
+}
