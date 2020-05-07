@@ -50,7 +50,7 @@ var app = new Framework7({
 
 var mainView = app.views.create('.view-main');
 
-var db, refUsuarios, refTiposUsuarios, refSeries, refPeliculas, refSeriesAnime, refPeliculasAnime;
+var db, refUsuarios, refTiposUsuarios, refSeries, refPeliculas, refSeriesAnime, refAnime;
  
 
 // Handle Cordova Device Ready Event
@@ -65,8 +65,8 @@ $$(document).on('deviceready', function() {
   refTiposUsuarios= db.collection("TIPOS_USUARIOS");
   refSeries = db.collection("SERIES");
   refPeliculas = db.collection("PELICULAS");
-  refSeriesAnime = db.collection("SERIES_ANIME");
-  refPeliculasAnime = db.collection("PELICULAS_ANIME");
+  //refSeriesAnime = db.collection("SERIES_ANIME");
+  refAnime = db.collection("ANIME");
 
 
 $$("#iniciar").on("click", login);
@@ -174,7 +174,26 @@ $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
 $$("#enviarValor").on("click", enviarValor);
 
 
-$$(".mipopup").on("click", obtenerID);
+
+})
+
+// Option 3. Using live 'page:init' event handlers for each page
+$$(document).on('page:init', '.page[data-name="anime"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+    getAllAnime();
+
+    
+
+
+})
+
+
+// Option 3. Using live 'page:init' event handlers for each page
+$$(document).on('page:init', '.page[data-name="series"]', function (e) {
+    // Do something here when page with data-name="about" attribute loaded and initialized
+   getAllSeries();    
+
+
 
 
 })
@@ -183,10 +202,9 @@ $$(".mipopup").on("click", obtenerID);
 // Option 5. Using live 'page:init' event handlers for each page
 $$(document).on('page:init', '.page[data-name="perfil"]', function (e) {
     // Do something here when page with data-name="about" attribute loaded and initialized
-    console.log(e);
-
-
     getInfo();
+
+    $$("#cerrarSesion").on("click", logout);
 
 
 })
@@ -291,6 +309,14 @@ function login(){
 
 
 
+}
+
+function logout(){
+  firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
 }
 
 
@@ -420,10 +446,41 @@ for(i = 1; i <= 16; i++){
 
     if( $$(".serie").is(":checked") ){
 
-      refSeriesAnime.doc(titulo).set(data);
+      refAnime.doc(titulo).set(data);
 
       //alert("Es una serie de anime");
       console.log("Es una serie de anime");
+
+
+      refAnime.doc(titulo).get().then(function(doc) {
+  if (doc.exists) {
+      pidotitulo = doc.data().titulo;
+      pidoano = doc.data().ano;
+      pidoduracion = doc.data().duracion;
+      pidonetflix = doc.data().netflix;
+      pidogeneros = doc.data().generos;
+      pidosinopsis = doc.data().sinopsis;
+      pidourl = doc.data().imagen;
+      pidotitulo2 = doc.data().titulo2;
+      pidovaloracion = doc.data().valoracion;
+      console.log("Titulo pedido: " + pidotitulo2);
+      console.log("Año pedido: " + pidoano);
+      console.log("Generos pedidos: " + pidogeneros);
+      console.log("Sinopsis pedida: " + pidosinopsis);
+      console.log("URL pedida: " + pidourl);
+      console.log("Duracion pedida: " + pidoduracion);
+      console.log("Netflix pedido: " + pidonetflix);
+      //bloquePelicula = '<p><a href="#" data-popup=".' + pidotitulo + '" class = "popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
+      //console.log(bloquePelicula);
+      
+//(acá arriba le digo que si encuentra un documento con esa clave -o sea con ese email- me cargue cada dato en cada variable)//
+  } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+  }
+}).catch(function(error) {
+  console.log("Error: ", error);
+});
 
 
 
@@ -436,10 +493,52 @@ for(i = 1; i <= 16; i++){
 
     if( $$(".pelicula").is(":checked") ){
 
-      refPeliculasAnime.doc(titulo).set(data);
+      refAnime.doc(titulo).set(data);
 
       //alert("Es una pelicula de anime");
       console.log("Es una pelicula de anime");
+
+
+
+      refAnime.doc(titulo).get().then(function(doc) {
+  if (doc.exists) {
+      pidotitulo = doc.data().titulo;
+      pidoano = doc.data().ano;
+      pidoduracion = doc.data().duracion;
+      pidonetflix = doc.data().netflix;
+      pidogeneros = doc.data().generos;
+      pidosinopsis = doc.data().sinopsis;
+      pidourl = doc.data().imagen;
+      pidotitulo2 = doc.data().titulo2;
+      pidovaloracion = doc.data().valoracion;
+      console.log("Titulo pedido: " + pidotitulo2);
+      console.log("Año pedido: " + pidoano);
+      console.log("Generos pedidos: " + pidogeneros);
+      console.log("Sinopsis pedida: " + pidosinopsis);
+      console.log("URL pedida: " + pidourl);
+      console.log("Duracion pedida: " + pidoduracion);
+      console.log("Netflix pedido: " + pidonetflix);
+      //bloquePelicula = '<p><a href="#" data-popup=".' + pidotitulo + '" class = "popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
+      //console.log(bloquePelicula);
+      
+//(acá arriba le digo que si encuentra un documento con esa clave -o sea con ese email- me cargue cada dato en cada variable)//
+  } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+  }
+}).catch(function(error) {
+  console.log("Error: ", error);
+});
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -455,6 +554,38 @@ for(i = 1; i <= 16; i++){
 
       //alert("Es una serie");
       console.log("Es una serie");
+
+
+
+      refSeries.doc(titulo).get().then(function(doc) {
+  if (doc.exists) {
+      pidotitulo = doc.data().titulo;
+      pidoano = doc.data().ano;
+      pidoduracion = doc.data().duracion;
+      pidonetflix = doc.data().netflix;
+      pidogeneros = doc.data().generos;
+      pidosinopsis = doc.data().sinopsis;
+      pidourl = doc.data().imagen;
+      pidotitulo2 = doc.data().titulo2;
+      pidovaloracion = doc.data().valoracion;
+      console.log("Titulo pedido: " + pidotitulo2);
+      console.log("Año pedido: " + pidoano);
+      console.log("Generos pedidos: " + pidogeneros);
+      console.log("Sinopsis pedida: " + pidosinopsis);
+      console.log("URL pedida: " + pidourl);
+      console.log("Duracion pedida: " + pidoduracion);
+      console.log("Netflix pedido: " + pidonetflix);
+      //bloquePelicula = '<p><a href="#" data-popup=".' + pidotitulo + '" class = "popup-open"><img src="' + pidourl + '" id="myimg" height="100vh" width="70vw"></a></p>'
+      //console.log(bloquePelicula);
+      
+//(acá arriba le digo que si encuentra un documento con esa clave -o sea con ese email- me cargue cada dato en cada variable)//
+  } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+  }
+}).catch(function(error) {
+  console.log("Error: ", error);
+});
 
 
 
@@ -622,7 +753,7 @@ generos = [];
               <div class="letrablanca">
 
                 <div class="botones" id="linea">
-                  <input type="text" id="${movieToAppend.pidotitulo2}" placeholder="Ingresa tu valoración" required validate pattern="[1-10]*" data-error-message="Only numbers please!">
+                  <input type="text" id="val_${movieToAppend.pidotitulo2}" placeholder="Ingresa tu valoración" required validate pattern="[1-10]*" data-error-message="Only numbers please!">
                 
                 </div>
 
@@ -687,6 +818,347 @@ function getUrlImage(urlImg, storageRef, callback){
     callback(url);
   });
 }
+
+
+
+function getAllSeries() {
+  let arrayOfSeries = [];
+
+  db.collection('SERIES').get().then(function(resultSeries) {
+    workWithArray(resultSeries, function(listOfSeriesToAppend){
+      console.log(listOfSeriesToAppend);
+      listOfSeriesToAppend.forEach(serieToAppend => {
+        $$("#listaSeries").append(
+                    `<p><a href="#" data-popup=".${serieToAppend.pidotitulo2}" id="${serieToAppend.pidotitulo}" class="popup-open mipopup"><img src=${serieToAppend.url} height="100vh" class="mipopup" width="70vw"></a></p>
+      <div class="popup popup-about ${serieToAppend.pidotitulo2}">
+        <div class="page">
+        <div class="page-content">
+        <div class="block">
+          <h3 class="text-align-center letrablanca"> ${serieToAppend.pidotitulo} </h3>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Género/s:
+                </div>
+                <div class="col letrablanca">
+                  ${serieToAppend.pidogeneros}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Año:
+                </div>
+                <div class="col letrablanca">
+                  ${serieToAppend.pidoano}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Duración:
+                </div>
+                <div class="col letrablanca">
+                  ${serieToAppend.pidoduracion}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Netflix: 
+                </div>
+                <div class="col letrablanca">
+                  ${serieToAppend.pidonetflix}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Sinopsis:
+                </div>
+                <div class="col letrablanca">
+                ${serieToAppend.pidosinopsis}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col-50">
+              <div class="infoizq letrablanca">Valoración (1-10)</div>
+              <div class="letrablanca">
+
+                <div class="botones" id="linea">
+                  <input type="text" id="${serieToAppend.pidotitulo2}" placeholder="Ingresa tu valoración" required validate pattern="[1-10]*" data-error-message="Only numbers please!">
+                
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="col-50">
+              <div class="col"><a class="button button-fill popup-close" id="enviarValor" href="#">Enviar</a></div>
+            </div>
+
+          </div>
+        </div>
+          <div class="block">
+            <div class="row">
+              <div class="col"><a class="button button-fill popup-close" href="#">Volver</a></div>
+              <div class="col"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>`
+        );
+      })
+      
+    })
+  });
+
+    
+}
+
+function workWithArray(arraySeries, callback){
+  arrayOfSeriesT = [];
+  var storageRef = firebase.storage().ref();
+  let count = 0;
+  console.log(arraySeries.docs.length);
+  arraySeries.forEach(doc => {
+    getUrlImage(doc.data().imagen, storageRef, function(value){
+      arrayOfSeriesT.push({
+            pidotitulo : doc.data().titulo,
+            pidoano : doc.data().año,
+            pidoduracion : doc.data().duracion,
+            pidonetflix : doc.data().netflix,
+            pidogeneros : doc.data().generos,
+            pidosinopsis : doc.data().sinopsis,
+            pidourl : doc.data().imagen,
+            pidotitulo2 : doc.data().titulo2,
+            url: value
+      });
+      count++;
+
+      if(count == arraySeries.docs.length){
+      console.log(arrayOfSeriesT);
+      callback(arrayOfSeriesT);
+    }
+    });
+    
+  })
+}
+
+function getUrlImage(urlImg, storageRef, callback){
+  storageRef.child(urlImg).getDownloadURL().then(function(url) {
+    callback(url);
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getAllAnime() {
+  let arrayOfAnime = [];
+
+  db.collection('ANIME').get().then(function(resultAnime) {
+    workWithArray(resultAnime, function(listOfAnimeToAppend){
+      console.log(listOfAnimeToAppend);
+      listOfAnimeToAppend.forEach(animeToAppend => {
+        $$("#listaAnime").append(
+                    `<p><a href="#" data-popup=".${animeToAppend.pidotitulo2}" id="${animeToAppend.pidotitulo}" class="popup-open mipopup"><img src=${animeToAppend.url} height="100vh" class="mipopup" width="70vw"></a></p>
+      <div class="popup popup-about ${animeToAppend.pidotitulo2}">
+        <div class="page">
+        <div class="page-content">
+        <div class="block">
+          <h3 class="text-align-center letrablanca"> ${animeToAppend.pidotitulo} </h3>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Género/s:
+                </div>
+                <div class="col letrablanca">
+                  ${animeToAppend.pidogeneros}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Año:
+                </div>
+                <div class="col letrablanca">
+                  ${animeToAppend.pidoano}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Duración:
+                </div>
+                <div class="col letrablanca">
+                  ${animeToAppend.pidoduracion}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Netflix: 
+                </div>
+                <div class="col letrablanca">
+                  ${animeToAppend.pidonetflix}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col infoizq letrablanca">
+                  Sinopsis:
+                </div>
+                <div class="col letrablanca">
+                ${animeToAppend.pidosinopsis}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="row">
+            <div class="col-50">
+              <div class="infoizq letrablanca">Valoración (1-10)</div>
+              <div class="letrablanca">
+
+                <div class="botones" id="linea">
+                  <input type="text" id="${animeToAppend.pidotitulo2}" placeholder="Ingresa tu valoración" required validate pattern="[1-10]*" data-error-message="Only numbers please!">
+                
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="col-50">
+              <div class="col"><a class="button button-fill popup-close" id="enviarValor" href="#">Enviar</a></div>
+            </div>
+
+          </div>
+        </div>
+          <div class="block">
+            <div class="row">
+              <div class="col"><a class="button button-fill popup-close" href="#">Volver</a></div>
+              <div class="col"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        </div>
+        </div>`
+        );
+      })
+      
+    })
+  });
+
+    
+}
+
+function workWithArray(arrayAnime, callback){
+  arrayOfAnimeT = [];
+  var storageRef = firebase.storage().ref();
+  let count = 0;
+  console.log(arrayAnime.docs.length);
+  arrayAnime.forEach(doc => {
+    getUrlImage(doc.data().imagen, storageRef, function(value){
+      arrayOfAnimeT.push({
+            pidotitulo : doc.data().titulo,
+            pidoano : doc.data().año,
+            pidoduracion : doc.data().duracion,
+            pidonetflix : doc.data().netflix,
+            pidogeneros : doc.data().generos,
+            pidosinopsis : doc.data().sinopsis,
+            pidourl : doc.data().imagen,
+            pidotitulo2 : doc.data().titulo2,
+            url: value
+      });
+      count++;
+      if(count == arrayAnime.docs.length){
+      callback(arrayOfAnimeT);
+    }
+    });
+    
+  })
+}
+
+function getUrlImage(urlImg, storageRef, callback){
+  storageRef.child(urlImg).getDownloadURL().then(function(url) {
+    callback(url);
+  });
+}
+
+
+
+
+
 /*function prepareMovies(arrayOfMovies, callback){
   var storageRef = firebase.storage().ref();
   db.collection('PELICULAS').get().then(function(movies) {
@@ -966,10 +1438,7 @@ function getInfo(){
       console.log("Apellido en perfil: " + apellidoPerfil);
       console.log("Fecha de nacimiento en perfil: " + nacimientoPerfil);
       console.log("Mail del perfil: " + mailPerfil);
-      $$("#nombrePerfil").val(nombrePerfil);
-      $$("#apellidoPerfil").val(apellidoPerfil);
-      $$("#nacimientoPerfil").val(nacimientoPerfil);
-      $$("#mailPerfil").val(mailPerfil);
+      $$(".perfil").append('<ul><li>Nombre: '+nombrePerfil+'</li><li>Apellido: '+apellidoPerfil+'</li><li>Dirección de correo electrónico: '+mailPerfil+'</li><li>Fecha de nacimiento: '+nacimientoPerfil+'</li></ul>'+'<div class="col"><a class="button button-fill popup-close toolbar-bottom" id="cerrarSesion" href="#">Cerrar Sesión</a></div>');
 
   } else {
       console.log("No such document!");
