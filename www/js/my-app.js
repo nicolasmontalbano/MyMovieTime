@@ -171,7 +171,7 @@ $$(document).on('page:init', '.page[data-name="peliculas"]', function (e) {
     getAllMovies();
     
 
-$$("#enviarValor").on("click", enviarValor);
+    enviarVoto();
 
 
 
@@ -762,7 +762,7 @@ generos = [];
             </div>
 
             <div class="col-50">
-              <div class="col"><a class="button button-fill popup-close" id="enviarValor" href="#">Enviar</a></div>
+              <div class="col"><a class="button button-fill" onclick="enviarVoto('${movieToAppend.pidotitulo2}')" id="enviarValor" href="#">Enviar</a></div>
             </div>
 
           </div>
@@ -1453,16 +1453,17 @@ function getInfo(){
 
 
 
+function enviarVoto(id) {
+  /*valor_id = "val" + id;
+  valor = $$("#"+valor_id).val();
+  alert(id + ' / ' + valor_id + '/' + valor);*/
+  
 
-
-function enviarValor(){
-  valor =  $$("#valor").val();
-  sumaVotos = sumaVotos + valor;
-  cantVotos = cantVotos + 1;
-  promedio = sumaVotos / cantVotos;
 
 
 }
+
+
 
 function obtenerID(){
   alert(this.id);
